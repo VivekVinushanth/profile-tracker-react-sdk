@@ -1,0 +1,38 @@
+{
+  "name": "profile-tracker-react-sdk",
+  "version": "0.0.1",
+  "description": "React SDK for user behavior tracking and profiling",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts"
+  },
+  "keywords": [
+    "sdk",
+    "analytics",
+    "tracking",
+    "react",
+    "wso2",
+    "profiling"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "@types/uuid": "^10.0.0",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.2"
+  }
+}
