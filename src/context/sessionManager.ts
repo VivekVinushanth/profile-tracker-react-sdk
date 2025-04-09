@@ -13,10 +13,10 @@ export function getOrCreateDeviceId(): string {
 }
 
 export function getOrCreatePermaId(): string {
-    let id = sessionStorage.getItem(PERMA_ID_KEY);
+    let id = localStorage.getItem(PERMA_ID_KEY);
     if (!id) {
         id = uuidv4();
-        sessionStorage.setItem(PERMA_ID_KEY, id);
+        localStorage.setItem(PERMA_ID_KEY, id);
     }
     return id;
 }

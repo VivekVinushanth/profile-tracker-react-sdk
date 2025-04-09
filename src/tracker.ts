@@ -7,7 +7,7 @@ import type { IdentifyEvent, TrackEvent, PageEvent } from "./types/eventTypes";
 
 function postEvent(payload: IdentifyEvent | TrackEvent | PageEvent, callback?: () => void) {
     const { perma_id } = payload;
-    fetch(`http://localhost:8080/api/v1/${perma_id}/event`, {
+    fetch(`http://localhost:8080/api/v1/event`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)

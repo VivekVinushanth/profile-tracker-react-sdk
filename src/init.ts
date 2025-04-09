@@ -30,11 +30,6 @@ export function initSDK(config: { clientId: string | undefined; appId: string | 
 
     // Auto-fire page event using analytics wrapper
     setTimeout(() => {
-        analytics.identify("init", { appId });
-    }, 0);
-
-    // Auto-fire page event using analytics wrapper
-    setTimeout(() => {
         analytics.page("page_visited");
     }, 0);
 
