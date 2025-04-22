@@ -7,7 +7,7 @@ import type { IdentifyEvent, TrackEvent, PageEvent } from "./types/eventTypes";
 
 function postEvent(payload: IdentifyEvent | TrackEvent | PageEvent, callback?: () => void) {
     const { perma_id } = payload;
-    fetch(`http://localhost:8080/api/v1/event`, {
+    fetch(`http://localhost:8900/api/v1/event`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -23,10 +23,11 @@ export function identify(eventName: string, traits: Record<string, any>, callbac
     const payload: IdentifyEvent = {
         perma_id: state.permaId,
         app_id: state.appId,
+        org_id: state.orgId,
         event_type: "Identify",
         event_name: eventName,
         event_id: uuidv4(),
-        event_timestamp: new Date().toISOString(),
+        event_timestamp: Math.floor(Date.now() / 1000),
         context: {
             ...context,
             device_id: state.deviceId,
@@ -45,10 +46,11 @@ export function track(eventName: string, properties: Record<string, any>, callba
     const payload: TrackEvent = {
         perma_id: state.permaId,
         app_id: state.appId,
+        org_id: state.orgId,
         event_type: "Track",
         event_name: eventName,
         event_id: uuidv4(),
-        event_timestamp: new Date().toISOString(),
+        event_timestamp: Math.floor(Date.now() / 1000),
         context: {
             ...context,
             device_id: state.deviceId,
@@ -68,10 +70,11 @@ export function page(eventName: string, properties: Record<string, any> = {}, ca
     const payload: PageEvent = {
         perma_id: state.permaId,
         app_id: state.appId,
+        org_id: state.orgId,
         event_type: "Page",
         event_name: "page_visited",
         event_id: uuidv4(),
-        event_timestamp: new Date().toISOString(),
+        event_timestamp: Math.floor(Date.now() / 1000),
         context: {
             ...context,
             device_id: state.deviceId,

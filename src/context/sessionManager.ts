@@ -20,3 +20,8 @@ export function getOrCreatePermaId(): string {
     }
     return id;
 }
+
+export function clearSession() {
+    localStorage.removeItem(DEVICE_ID_KEY);
+    localStorage.removeItem(PERMA_ID_KEY);
+}

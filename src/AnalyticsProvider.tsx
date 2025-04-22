@@ -7,18 +7,19 @@ import * as analytics from "./tracker";
 type AnalyticsProviderProps = {
     clientId?: string;
     appId?: string;
+    orgId: string;
     children: React.ReactNode;
     autoPageTrack?: boolean;
 };
 
 export const AnalyticsProvider = ({
                                       clientId,
-                                      appId,
+                                      appId, orgId,
                                       children,
                                       autoPageTrack = true
                                   }: AnalyticsProviderProps) => {
     useEffect(() => {
-        initSDK({ clientId, appId });
+        initSDK({ clientId, appId , orgId});
         if (autoPageTrack) {
             analytics.page("page_visited");
         }

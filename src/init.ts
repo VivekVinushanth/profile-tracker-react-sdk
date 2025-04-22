@@ -1,15 +1,17 @@
 // src/init.ts
 import { getAppIdFromClientId } from "./utils/app";
-import { getOrCreateDeviceId, getOrCreatePermaId } from "./context/sessionManager";
+import {clearSession, getOrCreateDeviceId, getOrCreatePermaId} from "./context/sessionManager";
 import * as analytics from "./tracker";
 
 export interface SDKConfig {
     clientId?: string;
     appId?: string;
+    orgId: string;
 }
 
 export interface SDKState {
     appId: string;
+    orgId: string;
     permaId: string;
     deviceId: string;
     sessionId?: string;
@@ -17,16 +19,17 @@ export interface SDKState {
 
 let sdkState: SDKState;
 
-export function initSDK(config: { clientId: string | undefined; appId: string | undefined }): SDKState {
+export function initSDK(config: { clientId: string | undefined; appId: string | undefined ; orgId: string }): SDKState {
     const permaId = getOrCreatePermaId();
     const deviceId = getOrCreateDeviceId();
 
     const appId = config.clientId || getAppIdFromClientId(config.clientId);
+    const orgId = config.orgId || ""
     if (!appId) {
         throw new Error("App ID is required (either via appId or clientId).");
     }
 
-    sdkState = { appId, permaId, deviceId };
+    sdkState = { appId, orgId, permaId, deviceId };
 
     // Auto-fire page event using analytics wrapper
     setTimeout(() => {
@@ -47,4 +50,8 @@ export function getPermaId(): string {
 
 export function getAppId(): string {
     return getSDKState().appId;
+}
+
+export function clearState() {
+   return clearSession();
 }

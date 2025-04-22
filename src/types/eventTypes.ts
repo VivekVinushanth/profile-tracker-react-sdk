@@ -6,10 +6,11 @@ export type EventType = "Page" | "Track" | "Identify";
 export interface BaseEvent {
     perma_id: string;
     app_id: string;
+    org_id: string,
     event_type: EventType;
     event_name: string;
     event_id: string;
-    event_timestamp: string;
+    event_timestamp: number;
     context: Context;
     locale?: string;
     properties?: Record<string, any>;
