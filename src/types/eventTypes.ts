@@ -5,7 +5,7 @@ export type EventType = "Page" | "Track" | "Identify";
 
 export interface BaseEvent {
     profile_id: string;
-    app_id: string;
+    applicationId: string;
     org_id: string,
     event_type: EventType;
     event_name: string;

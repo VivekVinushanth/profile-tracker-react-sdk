@@ -22,7 +22,7 @@ export function identify(eventName: string, traits: Record<string, any>, callbac
 
     const payload: IdentifyEvent = {
         profile_id: state.profileId,
-        app_id: state.appId,
+        applicationId: state.applicationId,
         org_id: state.orgId,
         event_type: "Identify",
         event_name: eventName,
@@ -45,7 +45,7 @@ export function track(eventName: string, properties: Record<string, any>, callba
 
     const payload: TrackEvent = {
         profile_id: state.profileId,
-        app_id: state.appId,
+        applicationId: state.applicationId,
         org_id: state.orgId,
         event_type: "Track",
         event_name: eventName,
@@ -69,7 +69,7 @@ export function page(eventName: string, properties: Record<string, any> = {}, ca
 
     const payload: PageEvent = {
         profile_id: state.profileId,
-        app_id: state.appId,
+        applicationId: state.applicationId,
         org_id: state.orgId,
         event_type: "Page",
         event_name: "page_visited",

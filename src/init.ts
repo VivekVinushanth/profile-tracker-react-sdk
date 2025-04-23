@@ -5,12 +5,12 @@ import * as analytics from "./tracker";
 
 export interface SDKConfig {
     clientId?: string;
-    appId?: string;
+    applicationId?: string;
     orgId: string;
 }
 
 export interface SDKState {
-    appId: string;
+    applicationId: string;
     orgId: string;
     profileId: string;
     deviceId: string;
@@ -19,17 +19,17 @@ export interface SDKState {
 
 let sdkState: SDKState;
 
-export function initSDK(config: { clientId: string | undefined; appId: string | undefined ; orgId: string }): SDKState {
+export function initSDK(config: { clientId: string | undefined; applicationId: string | undefined ; orgId: string }): SDKState {
     const profileId = getOrCreateProfileId();
     const deviceId = getOrCreateDeviceId();
 
-    const appId = config.clientId || getAppIdFromClientId(config.clientId);
+    const applicationId = config.clientId || getAppIdFromClientId(config.clientId);
     const orgId = config.orgId || ""
-    if (!appId) {
+    if (!applicationId) {
         throw new Error("App ID is required (either via appId or clientId).");
     }
 
-    sdkState = { appId, orgId, profileId: profileId, deviceId };
+    sdkState = { applicationId, orgId, profileId: profileId, deviceId };
 
     // Auto-fire page event using analytics wrapper
     setTimeout(() => {
@@ -49,7 +49,7 @@ export function getProfileId(): string {
 }
 
 export function getAppId(): string {
-    return getSDKState().appId;
+    return getSDKState().applicationId;
 }
 
 export function clearState() {
