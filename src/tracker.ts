@@ -6,7 +6,7 @@ import { collectContext } from "./context/contextCollector";
 import type { IdentifyEvent, TrackEvent, PageEvent } from "./types/eventTypes";
 
 function postEvent(payload: IdentifyEvent | TrackEvent | PageEvent, callback?: () => void) {
-    const { perma_id } = payload;
+    const { profile_id } = payload;
     fetch(`http://localhost:8900/api/v1/event`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -21,7 +21,7 @@ export function identify(eventName: string, traits: Record<string, any>, callbac
     const context = collectContext();
 
     const payload: IdentifyEvent = {
-        perma_id: state.permaId,
+        profile_id: state.profileId,
         app_id: state.appId,
         org_id: state.orgId,
         event_type: "Identify",
@@ -44,7 +44,7 @@ export function track(eventName: string, properties: Record<string, any>, callba
     const context = collectContext();
 
     const payload: TrackEvent = {
-        perma_id: state.permaId,
+        profile_id: state.profileId,
         app_id: state.appId,
         org_id: state.orgId,
         event_type: "Track",
@@ -68,7 +68,7 @@ export function page(eventName: string, properties: Record<string, any> = {}, ca
     const url = new URL(window.location.href);
 
     const payload: PageEvent = {
-        perma_id: state.permaId,
+        profile_id: state.profileId,
         app_id: state.appId,
         org_id: state.orgId,
         event_type: "Page",

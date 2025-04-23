@@ -4,7 +4,7 @@ import { Context } from "./contextTypes";
 export type EventType = "Page" | "Track" | "Identify";
 
 export interface BaseEvent {
-    perma_id: string;
+    profile_id: string;
     app_id: string;
     org_id: string,
     event_type: EventType;
