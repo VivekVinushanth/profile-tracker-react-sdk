@@ -5,9 +5,16 @@ import { v4 as uuidv4 } from "uuid";
 import { collectContext } from "./context/contextCollector";
 import type { IdentifyEvent, TrackEvent, PageEvent } from "./types/eventTypes";
 
+function buildUrl(path: string): string {
+    const state = getSDKState();
+    return `${state.url}${path}`; // Construct full URL dynamically
+}
+
 function postEvent(payload: IdentifyEvent | TrackEvent | PageEvent, callback?: () => void) {
     const { profile_id } = payload;
-    fetch(`http://localhost:8900/api/v1/events`, {
+    const url = buildUrl("/api/v1/events"); // Use buildUrl to construct the full URL
+
+    fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
