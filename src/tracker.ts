@@ -7,7 +7,7 @@ import type { IdentifyEvent, TrackEvent, PageEvent } from "./types/eventTypes";
 
 function postEvent(payload: IdentifyEvent | TrackEvent | PageEvent, callback?: () => void) {
     const { profile_id } = payload;
-    fetch(`http://localhost:8900/api/v1/event`, {
+    fetch(`http://localhost:8900/api/v1/events`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
