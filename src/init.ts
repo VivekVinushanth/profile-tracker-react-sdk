@@ -7,6 +7,7 @@ export interface SDKConfig {
     clientId?: string;
     applicationId?: string;
     orgId: string;
+    baseUrl?: string; // Updated to baseUrl
 }
 
 export interface SDKState {
@@ -15,21 +16,24 @@ export interface SDKState {
     profileId: string;
     deviceId: string;
     sessionId?: string;
+    url: string; // Added URL to SDK state
 }
 
 let sdkState: SDKState;
 
-export function initSDK(config: { clientId: string | undefined; applicationId: string | undefined ; orgId: string }): SDKState {
+export function initSDK(config: { clientId: string | undefined; applicationId: string | undefined ; orgId: string; baseUrl?: string }): SDKState {
     const profileId = getOrCreateProfileId();
     const deviceId = getOrCreateDeviceId();
 
     const applicationId = config.clientId || getAppIdFromClientId(config.clientId);
-    const orgId = config.orgId || ""
+    const orgId = config.orgId || "";
+    const baseUrl = config.baseUrl || "http://localhost:8900"; // Default base URL
+
     if (!applicationId) {
         throw new Error("App ID is required (either via appId or clientId).");
     }
 
-    sdkState = { applicationId, orgId, profileId: profileId, deviceId };
+    sdkState = { applicationId, orgId, profileId: profileId, deviceId, url: baseUrl }; // Store only baseUrl in SDK state
 
     // Auto-fire page event using analytics wrapper
     setTimeout(() => {
@@ -42,6 +46,10 @@ export function initSDK(config: { clientId: string | undefined; applicationId: s
 export function getSDKState(): SDKState {
     if (!sdkState) throw new Error("SDK not initialized");
     return sdkState;
+}
+
+export function getBaseUrl(): string {
+    return getSDKState().url; // Return the base URL from the SDK state
 }
 
 export function getProfileId(): string {

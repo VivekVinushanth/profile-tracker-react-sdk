@@ -5,4 +5,5 @@ export * as tracker from "./tracker";
 export { AnalyticsProvider } from "./AnalyticsProvider";
 export { getProfileId } from "./init";
 export { getAppId } from "./init";
+export { getBaseUrl } from "./init";
 
