@@ -8,6 +8,7 @@ type AnalyticsProviderProps = {
     clientId?: string;
     applicationId?: string;
     orgId: string;
+    writeKey?: string;
     children: React.ReactNode;
     autoPageTrack?: boolean;
 };
@@ -15,11 +16,12 @@ type AnalyticsProviderProps = {
 export const AnalyticsProvider = ({
                                       clientId,
                                       applicationId, orgId,
+                                        writeKey,
                                       children,
                                       autoPageTrack = true
                                   }: AnalyticsProviderProps) => {
     useEffect(() => {
-        initSDK({ clientId, applicationId , orgId});
+        initSDK({ clientId, applicationId , orgId, writeKey });
         if (autoPageTrack) {
             analytics.page("page_visited");
         }

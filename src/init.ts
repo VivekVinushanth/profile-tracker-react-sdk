@@ -17,23 +17,24 @@ export interface SDKState {
     deviceId: string;
     sessionId?: string;
     url: string; // Added URL to SDK state
+    writeKey: string;
 }
 
 let sdkState: SDKState;
 
-export function initSDK(config: { clientId: string | undefined; applicationId: string | undefined ; orgId: string; baseUrl?: string }): SDKState {
+export function initSDK(config: { clientId: string | undefined; applicationId: string | undefined ; orgId: string; baseUrl?: string; writeKey : string | undefined }): SDKState {
     const profileId = getOrCreateProfileId();
     const deviceId = getOrCreateDeviceId();
 
     const applicationId = config.clientId || getAppIdFromClientId(config.clientId);
     const orgId = config.orgId || "";
     const baseUrl = config.baseUrl || "http://localhost:8900"; // Default base URL
-
+    const writeKey = config.writeKey || "";
     if (!applicationId) {
         throw new Error("App ID is required (either via appId or clientId).");
     }
 
-    sdkState = { applicationId, orgId, profileId: profileId, deviceId, url: baseUrl }; // Store only baseUrl in SDK state
+    sdkState = { applicationId, orgId, profileId: profileId, deviceId, url: baseUrl , writeKey: writeKey}; // Store only baseUrl in SDK state
 
     // Auto-fire page event using analytics wrapper
     setTimeout(() => {
