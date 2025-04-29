@@ -4,10 +4,10 @@ import {clearSession, getOrCreateDeviceId, getOrCreateProfileId} from "./context
 import * as analytics from "./tracker";
 
 export interface SDKConfig {
-    clientId?: string;
-    applicationId?: string;
+    application_id?: string;
     orgId: string;
-    baseUrl?: string; // Updated to baseUrl
+    baseUrl?: string;
+    autoPageTrack?: boolean;
 }
 
 export interface SDKState {
@@ -26,7 +26,7 @@ export function initSDK(config: { clientId: string | undefined; applicationId: s
     const profileId = getOrCreateProfileId();
     const deviceId = getOrCreateDeviceId();
 
-    const applicationId = config.clientId || getAppIdFromClientId(config.clientId);
+    const applicationId = config.applicationId || "";
     const orgId = config.orgId || "";
     const baseUrl = config.baseUrl || "http://localhost:8900"; // Default base URL
     const writeKey = config.writeKey || "";
