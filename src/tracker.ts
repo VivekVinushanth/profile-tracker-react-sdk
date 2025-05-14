@@ -13,13 +13,13 @@ function buildUrl(path: string): string {
 function postEvent(payload: IdentifyEvent | TrackEvent | PageEvent, callback?: () => void) {
     const { profile_id } = payload;
     const url = buildUrl("/api/v1/events"); // Use buildUrl to construct the full URL
-    const { apiKey } = getSDKState(); // ✅ Correct: destructure from object
-    const token = apiKey; // Optional, you can use writeKey directly too
+    const { eventStreamId } = getSDKState(); // ✅ Correct: destructure from object
+    const token = eventStreamId; // Optional, you can use writeKey directly too
     fetch(url, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `apikey ${token}` // ✅ Proper Authorization header
+            "Authorization": `eventStreamId ${token}` // ✅ Proper Authorization header
         },
         body: JSON.stringify(payload)
     })
