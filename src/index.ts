@@ -7,4 +7,5 @@ export { getProfileId } from "./init";
 export { getAppId } from "./init";
 export { getBaseUrl } from "./init";
 export { onSDKReady } from "./init";
+export { fetchProfile } from "./init";
 
