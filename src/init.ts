@@ -1,7 +1,6 @@
 // src/init.ts
 import { getAppIdFromClientId } from "./utils/app";
 import {clearSession, getOrCreateDeviceId, getOrCreateProfileId} from "./context/sessionManager";
-import * as analytics from "./tracker";
 
 export interface SDKConfig {
     application_id?: string;
@@ -20,9 +19,10 @@ export interface SDKState {
     eventStreamId: string;
 }
 
-let sdkState: SDKState;
+let sdkState: SDKState | undefined;
+let readyListeners: Array<() => void> = [];
 
-export function initSDK(config: { clientId: string | undefined; applicationId: string | undefined ; orgId: string; baseUrl?: string; eventStreamId : string | undefined }): SDKState {
+export function initSDK(config: { clientId: string | undefined; applicationId: string | undefined ; orgId: string; baseUrl?: string; eventStreamId : string | undefined }, onReady?: () => void): SDKState {
     const profileId = getOrCreateProfileId();
     const deviceId = getOrCreateDeviceId();
 
@@ -36,12 +36,23 @@ export function initSDK(config: { clientId: string | undefined; applicationId: s
 
     sdkState = { applicationId, orgId, profileId: profileId, deviceId, url: baseUrl , eventStreamId: eventStreamId}; // Store only baseUrl in SDK state
 
-    // Auto-fire page event using analytics wrapper
-    setTimeout(() => {
-        analytics.page("page_visited");
-    }, 0);
+    // Notify all listeners
+    readyListeners.forEach(cb => cb());
+    readyListeners = [];
+
+    // If a callback is passed directly, call it
+    if (onReady) onReady();
 
     return sdkState;
+}
+
+// Register a callback to be called when SDK is ready
+export function onSDKReady(cb: () => void) {
+    if (sdkState) {
+        cb();
+    } else {
+        readyListeners.push(cb);
+    }
 }
 
 export function getSDKState(): SDKState {

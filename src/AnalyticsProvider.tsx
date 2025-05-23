@@ -1,5 +1,5 @@
 // src/components/AnalyticsProvider.tsx
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import { initSDK } from "./init";
 import * as analytics from "./tracker";
 
@@ -20,6 +20,7 @@ export const AnalyticsProvider = ({
                                       children,
                                       autoPageTrack = true
                                   }: AnalyticsProviderProps) => {
+
     useEffect(() => {
         initSDK({ clientId, applicationId , orgId, eventStreamId });
         if (autoPageTrack) {
