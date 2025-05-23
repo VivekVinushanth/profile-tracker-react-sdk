@@ -75,3 +75,19 @@ export function getAppId(): string {
 export function clearState() {
    return clearSession();
 }
+
+// Fetch the full profile for the current user (returns the profile object or null)
+export async function fetchProfile(): Promise<any | null> {
+  try {
+    const profileId = getProfileId();
+    if (!profileId) return null;
+    const baseUrl = getBaseUrl();
+    const response = await fetch(`${baseUrl}/api/v1/profiles/${profileId}`);
+    if (!response.ok) throw new Error('Failed to fetch profile');
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error('Error fetching profile:', err);
+    return null;
+  }
+}

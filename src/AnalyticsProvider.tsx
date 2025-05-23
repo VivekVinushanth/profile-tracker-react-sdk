@@ -2,6 +2,7 @@
 import React, {useEffect} from "react";
 import { initSDK } from "./init";
 import * as analytics from "./tracker";
+import { useRef } from "react";
 
 
 type AnalyticsProviderProps = {
