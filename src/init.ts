@@ -83,11 +83,12 @@ export async function fetchProfile(): Promise<any | null> {
     if (!profileId) return null;
     const baseUrl = getBaseUrl();
     const response = await fetch(`${baseUrl}/api/v1/profiles/${profileId}`);
-    if (!response.ok) throw new Error('Failed to fetch profile');
+    if (!response.ok) return null; // Gracefully handle non-OK response
     const data = await response.json();
     return data;
   } catch (err) {
-    console.error('Error fetching profile:', err);
+    // Gracefully handle all errors, do not throw
+    // Optionally log: console.warn('Error fetching profile:', err);
     return null;
   }
 }
